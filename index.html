@@ -1,1612 +1,1137 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>3D Design | Learn, Create & Explore</title>
 
     <meta name="description"
-        content="A complete introduction to 3D design, modelling, topology, materials, lighting, animation and rendering.">
+          content="Learn the fundamentals of 3D design, modelling, texturing, lighting, animation and rendering.">
 
     <style>
-
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+        }
+
+        html {
             scroll-behavior: smooth;
         }
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background: #050816;
-            color: #e5e7eb;
             line-height: 1.7;
-            overflow-x: hidden;
+            background: #0b0f14;
+            color: #e8edf2;
         }
 
-        a {
-            text-decoration: none;
-        }
+        /* HEADER */
 
-        /* BACKGROUND */
-
-        body::before {
-            content: "";
-            position: fixed;
-            width: 500px;
-            height: 500px;
-            background: #2563eb;
-            filter: blur(180px);
-            opacity: 0.15;
-            top: -150px;
-            left: -150px;
-            z-index: -1;
-        }
-
-        body::after {
-            content: "";
-            position: fixed;
-            width: 450px;
-            height: 450px;
-            background: #06b6d4;
-            filter: blur(180px);
-            opacity: 0.12;
-            bottom: -150px;
-            right: -150px;
-            z-index: -1;
-        }
-
-        /* NAVIGATION */
-
-        nav {
+        header {
+            background: #111820;
+            padding: 18px 7%;
             position: sticky;
             top: 0;
             z-index: 1000;
+            border-bottom: 1px solid #26313c;
+        }
 
-            padding: 18px 7%;
-
+        .nav {
+            max-width: 1200px;
+            margin: auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-
-            background: rgba(5, 8, 22, 0.92);
-            backdrop-filter: blur(15px);
-
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            gap: 20px;
         }
 
         .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #38bdf8;
-            letter-spacing: 2px;
+            color: #ffffff;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 22px;
-            flex-wrap: wrap;
+        .logo span {
+            color: #f5b942;
         }
 
-        .nav-links a {
-            color: #cbd5e1;
-            font-weight: bold;
-            transition: 0.3s;
+        nav a {
+            color: #cbd5df;
+            text-decoration: none;
+            margin-left: 18px;
+            font-size: 14px;
         }
 
-        .nav-links a:hover {
-            color: #38bdf8;
+        nav a:hover {
+            color: #f5b942;
         }
 
         /* HERO */
 
         .hero {
-            min-height: 90vh;
-
+            min-height: 600px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-
-            gap: 60px;
-            padding: 80px 8%;
+            background:
+                radial-gradient(circle at top right, #263b4c, transparent 40%),
+                linear-gradient(135deg, #0b0f14, #111a23);
+            padding: 80px 7%;
         }
 
         .hero-content {
-            max-width: 680px;
+            max-width: 1200px;
+            margin: auto;
         }
 
-        .hero-tag {
+        .badge {
             display: inline-block;
-
-            padding: 8px 16px;
-
-            border: 1px solid #38bdf8;
+            padding: 7px 14px;
+            border: 1px solid #f5b942;
             border-radius: 30px;
-
-            color: #38bdf8;
+            color: #f5b942;
             font-size: 13px;
-
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .hero h1 {
-            font-size: clamp(45px, 7vw, 85px);
+            font-size: clamp(42px, 7vw, 82px);
             line-height: 1.05;
-            color: white;
             margin-bottom: 25px;
         }
 
         .hero h1 span {
-            color: #38bdf8;
+            color: #f5b942;
         }
 
         .hero p {
-            color: #94a3b8;
+            max-width: 720px;
+            color: #b8c3cd;
             font-size: 18px;
-            max-width: 620px;
+            margin-bottom: 30px;
         }
 
-        .hero-buttons {
-            margin-top: 35px;
-
+        .buttons {
             display: flex;
-            gap: 15px;
             flex-wrap: wrap;
+            gap: 14px;
         }
 
-        .button {
-            padding: 14px 25px;
+        .btn {
+            display: inline-block;
+            padding: 13px 22px;
             border-radius: 8px;
+            text-decoration: none;
             font-weight: bold;
-            transition: 0.3s;
+            transition: 0.2s;
         }
 
-        .primary-button {
-            background: #38bdf8;
-            color: #020617;
+        .btn-primary {
+            background: #f5b942;
+            color: #111;
         }
 
-        .primary-button:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(56,189,248,0.3);
+        .btn-primary:hover {
+            transform: translateY(-2px);
         }
 
-        .secondary-button {
-            border: 1px solid #334155;
-            color: #cbd5e1;
+        .btn-secondary {
+            border: 1px solid #4b5a68;
+            color: #fff;
         }
 
-        .secondary-button:hover {
-            border-color: #38bdf8;
-            color: #38bdf8;
+        .btn-secondary:hover {
+            border-color: #f5b942;
+            color: #f5b942;
         }
 
-        /* 3D CUBE */
-
-        .cube-container {
-            width: 300px;
-            height: 300px;
-
-            perspective: 800px;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .cube {
-            width: 150px;
-            height: 150px;
-
-            position: relative;
-
-            transform-style: preserve-3d;
-
-            animation: rotateCube 10s infinite linear;
-        }
-
-        .face {
-            position: absolute;
-
-            width: 150px;
-            height: 150px;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            font-size: 25px;
-            font-weight: bold;
-
-            color: #38bdf8;
-
-            background: rgba(56,189,248,0.07);
-
-            border: 2px solid #38bdf8;
-
-            box-shadow:
-                0 0 25px rgba(56,189,248,0.3),
-                inset 0 0 25px rgba(56,189,248,0.08);
-        }
-
-        .front {
-            transform: translateZ(75px);
-        }
-
-        .back {
-            transform: rotateY(180deg) translateZ(75px);
-        }
-
-        .right {
-            transform: rotateY(90deg) translateZ(75px);
-        }
-
-        .left {
-            transform: rotateY(-90deg) translateZ(75px);
-        }
-
-        .top {
-            transform: rotateX(90deg) translateZ(75px);
-        }
-
-        .bottom {
-            transform: rotateX(-90deg) translateZ(75px);
-        }
-
-        @keyframes rotateCube {
-
-            from {
-                transform: rotateX(0deg) rotateY(0deg);
-            }
-
-            to {
-                transform: rotateX(360deg) rotateY(360deg);
-            }
-
-        }
-
-        /* SECTIONS */
+        /* GENERAL */
 
         section {
-            padding: 90px 8%;
+            padding: 80px 7%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
         }
 
         .section-title {
-            text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
         .section-title h2 {
-            font-size: 40px;
-            color: white;
+            font-size: 36px;
             margin-bottom: 10px;
         }
 
         .section-title p {
-            color: #64748b;
+            color: #9eabb7;
         }
 
-        /* TEXT CONTENT */
-
-        .content-box {
-            max-width: 1050px;
-            margin: auto;
-
-            padding: 40px;
-
-            background: rgba(15,23,42,0.82);
-
-            border: 1px solid #1e293b;
-
-            border-radius: 20px;
-
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-        }
-
-        .content-box p {
-            margin-bottom: 20px;
-            color: #cbd5e1;
-        }
-
-        .content-box h3 {
-            color: #38bdf8;
-            margin-top: 30px;
-            margin-bottom: 10px;
-        }
-
-        /* CARDS */
-
-        .cards {
-            max-width: 1150px;
-            margin: auto;
-
+        .card-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 22px;
         }
 
         .card {
-            padding: 32px;
-
-            background: #0f172a;
-
-            border: 1px solid #1e293b;
-
-            border-radius: 18px;
-
-            transition: 0.4s;
+            background: #121a22;
+            border: 1px solid #26313c;
+            padding: 25px;
+            border-radius: 14px;
+            transition: 0.25s;
         }
 
         .card:hover {
-            transform: translateY(-8px);
-            border-color: #38bdf8;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-        }
-
-        .card-number {
-            color: #38bdf8;
-            font-weight: bold;
-            margin-bottom: 12px;
+            transform: translateY(-5px);
+            border-color: #f5b942;
         }
 
         .card h3 {
-            color: white;
-            font-size: 21px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
+            color: #ffffff;
         }
 
         .card p {
-            color: #94a3b8;
+            color: #aeb9c3;
         }
 
-        /* PROCESS */
+        /* ABOUT */
 
-        .process {
-            max-width: 1150px;
-            margin: auto;
-
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-
-            gap: 25px;
+        #about {
+            background: #0e141b;
         }
 
-        .process-box {
-            padding: 32px;
+        /* GEOMETRY */
 
-            background: #0f172a;
-
-            border-radius: 18px;
-
-            border-left: 4px solid #38bdf8;
-        }
-
-        .process-box h3 {
-            color: white;
-            margin-bottom: 12px;
-        }
-
-        .process-box p {
-            color: #94a3b8;
-        }
-
-        /* APPLICATIONS */
-
-        .applications {
-            max-width: 1150px;
-            margin: auto;
-
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-
-            gap: 25px;
-        }
-
-        .application {
-            padding: 30px;
-
-            background: #0f172a;
-
-            border: 1px solid #1e293b;
-
-            border-radius: 18px;
-        }
-
-        .application h3 {
-            color: #38bdf8;
+        .number {
+            color: #f5b942;
+            font-weight: bold;
+            font-size: 13px;
             margin-bottom: 10px;
         }
 
-        .application p {
-            color: #94a3b8;
+        /* WORKFLOW */
+
+        .workflow {
+            counter-reset: steps;
+        }
+
+        .step {
+            position: relative;
+        }
+
+        /* USES */
+
+        .uses-card {
+            min-height: 180px;
         }
 
         /* RESOURCES */
 
-        .resources {
-            max-width: 1100px;
-            margin: auto;
-
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-
-            gap: 20px;
+        #resources {
+            background: #0e141b;
         }
 
-        .resource {
-            padding: 25px;
-
-            background: #0f172a;
-
-            border: 1px solid #1e293b;
-
-            border-radius: 15px;
-
-            transition: 0.3s;
+        .resource-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 240px;
         }
 
-        .resource:hover {
-            border-color: #38bdf8;
-            transform: translateY(-5px);
-        }
-
-        .resource h3 {
-            color: #38bdf8;
-            margin-bottom: 8px;
-        }
-
-        .resource p {
-            color: #94a3b8;
-            margin-bottom: 15px;
-        }
-
-        .resource a {
-            color: white;
+        .resource-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #f5b942;
+            text-decoration: none;
             font-weight: bold;
         }
 
-        .resource a:hover {
-            color: #38bdf8;
+        .resource-link:hover {
+            text-decoration: underline;
         }
 
-        /* AUTHOR */
+        /* MONEY SECTION */
 
-        .author-box {
-            max-width: 800px;
-            margin: auto;
+        .money-section {
+            background: linear-gradient(135deg, #161d25, #0d1218);
+        }
 
+        .money-card {
+            border: 1px solid #394957;
+            background: #121a22;
+            padding: 30px;
+            border-radius: 14px;
+        }
+
+        .money-card h3 {
+            color: #f5b942;
+            margin-bottom: 12px;
+        }
+
+        .money-card ul {
+            margin: 15px 0 0 20px;
+            color: #b7c2cc;
+        }
+
+        /* AFFILIATE NOTE */
+
+        .affiliate-note {
+            margin-top: 25px;
+            padding: 18px;
+            border-left: 4px solid #f5b942;
+            background: #161e26;
+            color: #aeb9c3;
+            border-radius: 5px;
+        }
+
+        /* HIRE ME */
+
+        .hire {
+            background: #f5b942;
+            color: #111;
             text-align: center;
-
-            padding: 40px;
-
-            background: linear-gradient(
-                145deg,
-                #0f172a,
-                #111827
-            );
-
-            border: 1px solid #1e293b;
-
-            border-radius: 20px;
         }
 
-        .author-box h2 {
-            color: white;
-            margin-bottom: 15px;
+        .hire h2 {
+            font-size: 38px;
+            margin-bottom: 12px;
         }
 
-        .author-box p {
-            color: #94a3b8;
+        .hire p {
+            max-width: 650px;
+            margin: 0 auto 25px;
         }
 
-        .author-name {
-            color: #38bdf8 !important;
-            font-size: 22px;
+        .hire-btn {
+            display: inline-block;
+            background: #111;
+            color: #fff;
+            padding: 14px 25px;
+            border-radius: 8px;
+            text-decoration: none;
             font-weight: bold;
-            margin-top: 15px;
         }
 
-        /* WHATSAPP */
-
-        .whatsapp-button {
-            position: fixed;
-
-            right: 25px;
-            bottom: 25px;
-
-            z-index: 9999;
-
-            padding: 15px 22px;
-
-            border-radius: 50px;
-
-            background: #25D366;
-
-            color: white;
-
-            font-weight: bold;
-
-            box-shadow: 0 6px 25px rgba(0,0,0,0.4);
-
-            transition: 0.3s;
+        .hire-btn:hover {
+            background: #222;
         }
 
-        .whatsapp-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        /* ADVERTISEMENT */
+
+        .advertisement {
+            text-align: center;
+            padding: 25px;
+            background: #0a0e12;
+            color: #697681;
+            font-size: 12px;
+            letter-spacing: 1px;
         }
 
         /* FOOTER */
 
         footer {
-            padding: 35px;
-
+            background: #080b0f;
+            padding: 45px 7%;
             text-align: center;
-
-            background: #020617;
-
-            border-top: 1px solid #1e293b;
-
-            color: #64748b;
+            color: #7f8b96;
         }
 
         footer strong {
-            color: #38bdf8;
+            color: #ffffff;
+        }
+
+        .footer-links {
+            margin: 18px 0;
+        }
+
+        .footer-links a {
+            color: #aeb9c3;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+
+        .footer-links a:hover {
+            color: #f5b942;
         }
 
         /* MOBILE */
 
-        @media (max-width: 850px) {
+        @media (max-width: 700px) {
+
+            header {
+                position: relative;
+            }
+
+            .nav {
+                flex-direction: column;
+            }
 
             nav {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .nav-links {
-                justify-content: center;
-            }
-
-            .hero {
-                flex-direction: column;
                 text-align: center;
             }
 
-            .hero-content {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
+            nav a {
+                display: inline-block;
+                margin: 5px 7px;
             }
 
-            .cards,
-            .process,
-            .applications,
-            .resources {
-                grid-template-columns: 1fr;
-            }
-
-            .cube-container {
-                transform: scale(0.85);
-            }
-
-        }
-
-        @media (max-width: 500px) {
-
-            .hero h1 {
-                font-size: 48px;
-            }
-
-            .hero p {
-                font-size: 16px;
+            .hero {
+                min-height: 500px;
+                padding-top: 60px;
             }
 
             section {
-                padding: 70px 6%;
+                padding: 60px 5%;
             }
 
-            .content-box {
-                padding: 25px;
+            .section-title h2 {
+                font-size: 29px;
             }
 
-            .whatsapp-button {
-                right: 15px;
-                bottom: 15px;
-                padding: 13px 17px;
-                font-size: 14px;
+            .hire h2 {
+                font-size: 30px;
             }
-
         }
-
     </style>
-
 </head>
-
 
 <body>
 
+<!-- ================= HEADER ================= -->
 
-    <!-- NAVIGATION -->
-
-    <nav>
+<header>
+    <div class="nav">
 
         <div class="logo">
-            3D DESIGN
+            3D<span>DESIGN</span>
         </div>
 
-        <div class="nav-links">
-
-            <a href="#home">Home</a>
-
+        <nav>
             <a href="#about">About</a>
-
             <a href="#geometry">Geometry</a>
-
-            <a href="#process">Process</a>
-
-            <a href="#applications">Uses</a>
-
+            <a href="#workflow">Process</a>
+            <a href="#uses">Uses</a>
             <a href="#resources">Resources</a>
+            <a href="#hire">Hire Me</a>
+        </nav>
 
+    </div>
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <span class="badge">3D DESIGN • LEARN • CREATE • EXPLORE</span>
+
+        <h1>
+            Imagine.<br>
+            Build.<br>
+            <span>Create in 3D.</span>
+        </h1>
+
+        <p>
+            Discover how designers, artists, engineers and developers
+            use three-dimensional computer graphics to transform ideas
+            into digital objects, environments, characters and visual
+            experiences.
+        </p>
+
+        <div class="buttons">
+            <a href="#about" class="btn btn-primary">
+                Start Learning
+            </a>
+
+            <a href="#resources" class="btn btn-secondary">
+                Explore Resources
+            </a>
         </div>
 
-    </nav>
+    </div>
+
+</section>
 
 
-    <!-- HERO -->
+<!-- ================= ABOUT ================= -->
 
-    <section class="hero" id="home">
+<section id="about">
 
-        <div class="hero-content">
-
-            <div class="hero-tag">
-                EXPLORE THE WORLD OF 3D DESIGN
-            </div>
-
-            <h1>
-                Imagine.<br>
-                <span>Build.</span><br>
-                Create in 3D.
-            </h1>
-
-            <p>
-                Discover how artists, designers, engineers and
-                developers use three-dimensional computer graphics
-                to turn ideas into digital objects, environments,
-                characters and visual experiences.
-            </p>
-
-            <div class="hero-buttons">
-
-                <a href="#about" class="button primary-button">
-                    Start Learning
-                </a>
-
-                <a href="#resources" class="button secondary-button">
-                    Explore Resources
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- ROTATING CUBE -->
-
-        <div class="cube-container">
-
-            <div class="cube">
-
-                <div class="face front">3D</div>
-                <div class="face back">3D</div>
-                <div class="face right">X</div>
-                <div class="face left">Y</div>
-                <div class="face top">Z</div>
-                <div class="face bottom">+</div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ABOUT -->
-
-    <section id="about">
+    <div class="container">
 
         <div class="section-title">
-
             <h2>What Is 3D Design?</h2>
-
-            <p>
-                Understanding the foundation of three-dimensional creation
-            </p>
-
+            <p>Understanding the foundation of three-dimensional creation.</p>
         </div>
 
-
-        <div class="content-box">
-
-            <p>
-                3D design is the process of creating digital
-                representations of objects, characters, environments
-                or spaces that have height, width and depth.
-            </p>
-
-            <p>
-                Unlike a traditional flat drawing, a 3D model can
-                be viewed from different angles and can be modified,
-                textured, illuminated, animated and rendered.
-            </p>
-
-            <p>
-                3D modelling is commonly performed using specialized
-                computer software. A designer can begin with simple
-                shapes and progressively transform them into complex
-                digital objects.
-            </p>
-
-            <h3>
-                Why Is 3D Design Important?
-            </h3>
-
-            <p>
-                3D design allows people to visualize ideas before
-                building physical products or environments. It can
-                help designers study shape, proportions, materials,
-                lighting and movement before the final result is
-                produced.
-            </p>
-
-            <p>
-                3D models are used in architecture, construction,
-                engineering, product development, medicine, film,
-                television, advertising and video games.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- GEOMETRY -->
-
-    <section id="geometry">
-
-        <div class="section-title">
-
-            <h2>Core Geometry</h2>
-
-            <p>
-                The fundamental building blocks of 3D models
-            </p>
-
-        </div>
-
-
-        <div class="cards">
-
+        <div class="card-grid">
 
             <div class="card">
+                <h3>Digital Objects</h3>
+                <p>
+                    3D design allows creators to build digital representations
+                    of objects, characters, environments and spaces with height,
+                    width and depth.
+                </p>
+            </div>
 
-                <div class="card-number">
-                    01 / VERTICES
-                </div>
+            <div class="card">
+                <h3>Multiple Angles</h3>
+                <p>
+                    Unlike a flat drawing, a 3D model can be viewed, rotated,
+                    modified and studied from different angles.
+                </p>
+            </div>
 
-                <h3>
-                    Vertices
-                </h3>
+            <div class="card">
+                <h3>Real-World Applications</h3>
+                <p>
+                    3D technology is used in architecture, engineering,
+                    product design, games, film, education and advertising.
+                </p>
+            </div>
 
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= GEOMETRY ================= -->
+
+<section id="geometry">
+
+    <div class="container">
+
+        <div class="section-title">
+            <h2>Core Geometry</h2>
+            <p>The fundamental building blocks of 3D models.</p>
+        </div>
+
+        <div class="card-grid">
+
+            <div class="card">
+                <div class="number">01 / VERTICES</div>
+                <h3>Vertices</h3>
                 <p>
                     A vertex is a point in three-dimensional space.
-                    Multiple vertices can be connected together to
-                    create the structure of a model.
+                    Multiple vertices can be connected to create model structures.
                 </p>
-
             </div>
 
-
             <div class="card">
-
-                <div class="card-number">
-                    02 / EDGES
-                </div>
-
-                <h3>
-                    Edges
-                </h3>
-
+                <div class="number">02 / EDGES</div>
+                <h3>Edges</h3>
                 <p>
-                    An edge is a line connecting two vertices.
-                    Edges help define the shape and structure of
-                    a polygonal mesh.
+                    An edge connects two vertices and helps define
+                    the shape of a polygonal mesh.
                 </p>
-
             </div>
 
-
             <div class="card">
-
-                <div class="card-number">
-                    03 / FACES
-                </div>
-
-                <h3>
-                    Faces
-                </h3>
-
+                <div class="number">03 / FACES</div>
+                <h3>Faces</h3>
                 <p>
                     Faces are surfaces enclosed by edges. Together,
                     vertices, edges and faces form polygonal models.
                 </p>
-
             </div>
 
-
             <div class="card">
-
-                <div class="card-number">
-                    04 / MESH
-                </div>
-
-                <h3>
-                    Mesh
-                </h3>
-
+                <div class="number">04 / MESH</div>
+                <h3>Mesh</h3>
                 <p>
                     A mesh is a collection of connected geometric
-                    elements used to represent the surface of a
-                    three-dimensional object.
+                    elements representing the surface of a 3D object.
                 </p>
-
             </div>
-
 
             <div class="card">
-
-                <div class="card-number">
-                    05 / TOPOLOGY
-                </div>
-
-                <h3>
-                    Topology
-                </h3>
-
+                <div class="number">05 / TOPOLOGY</div>
+                <h3>Topology</h3>
                 <p>
-                    Topology describes how the vertices, edges and
-                    faces are arranged. Good topology can make a
-                    model easier to animate, deform and texture.
+                    Topology describes how vertices, edges and faces
+                    are arranged within a model.
                 </p>
-
             </div>
-
 
             <div class="card">
-
-                <div class="card-number">
-                    06 / AXES
-                </div>
-
-                <h3>
-                    X, Y & Z
-                </h3>
-
+                <div class="number">06 / AXES</div>
+                <h3>X, Y & Z</h3>
                 <p>
-                    Three-dimensional scenes use coordinate axes
-                    to describe an object's position, rotation and
-                    scale in space.
+                    Three-dimensional scenes use coordinate axes to
+                    control position, rotation and scale.
                 </p>
-
             </div>
-
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
-    <!-- TYPES OF MODELING -->
+<!-- ================= TYPES ================= -->
 
-    <section>
+<section>
+
+    <div class="container">
 
         <div class="section-title">
-
             <h2>Types of 3D Modelling</h2>
+            <p>Different modelling methods are useful for different projects.</p>
+        </div>
 
-            <p>
-                Different modelling approaches are useful for different projects
-            </p>
+        <div class="card-grid">
+
+            <div class="card">
+                <h3>Wireframe Modelling</h3>
+                <p>
+                    Focuses on the skeletal structure of an object using
+                    vertices and edges.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Surface Modelling</h3>
+                <p>
+                    Focuses on creating the outer surfaces of objects,
+                    often used for complex shapes and product visualization.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Solid Modelling</h3>
+                <p>
+                    Represents objects as complete volumes and is common
+                    in engineering and manufacturing.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Digital Sculpting</h3>
+                <p>
+                    Allows artists to shape highly detailed digital models
+                    in a way similar to traditional sculpting.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Polygonal Modelling</h3>
+                <p>
+                    Builds objects from connected polygon faces and is
+                    widely used in games, animation and visual effects.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Parametric Design</h3>
+                <p>
+                    Uses editable dimensions, relationships and parameters
+                    to control designs.
+                </p>
+            </div>
 
         </div>
 
+    </div>
 
-        <div class="cards">
-
-
-            <div class="card">
-
-                <h3>
-                    Wireframe Modelling
-                </h3>
-
-                <p>
-                    Wireframe models focus on the skeletal structure
-                    of an object using vertices and edges.
-                </p>
-
-            </div>
+</section>
 
 
-            <div class="card">
+<!-- ================= WORKFLOW ================= -->
 
-                <h3>
-                    Surface Modelling
-                </h3>
+<section id="workflow">
 
-                <p>
-                    Surface modelling focuses on creating the outer
-                    surfaces of objects and is useful for complex
-                    shapes and product visualization.
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>
-                    Solid Modelling
-                </h3>
-
-                <p>
-                    Solid modelling represents objects as complete
-                    volumes and is widely used in engineering,
-                    manufacturing and technical design.
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>
-                    Sculpting
-                </h3>
-
-                <p>
-                    Digital sculpting allows artists to shape highly
-                    detailed models in a way that resembles traditional
-                    sculpting.
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>
-                    Polygonal Modelling
-                </h3>
-
-                <p>
-                    Polygonal modelling creates objects from connected
-                    polygon faces and is widely used in games, animation
-                    and visual effects.
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>
-                    Parametric Design
-                </h3>
-
-                <p>
-                    Parametric approaches allow designs to be controlled
-                    through dimensions, relationships and editable
-                    parameters.
-                </p>
-
-            </div>
-
-
-        </div>
-
-    </section>
-
-
-    <!-- MODELLING PROCESS -->
-
-    <section id="process">
+    <div class="container">
 
         <div class="section-title">
-
             <h2>The 3D Design Workflow</h2>
+            <p>A typical journey from an idea to a finished visual.</p>
+        </div>
 
-            <p>
-                A typical journey from an idea to a finished image
-            </p>
+        <div class="card-grid">
+
+            <div class="card">
+                <div class="number">01 — CONCEPT</div>
+                <h3>Concept</h3>
+                <p>
+                    Start with an idea, sketch, reference image or design requirement.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="number">02 — BLOCKOUT</div>
+                <h3>Blockout</h3>
+                <p>
+                    Use simple shapes to establish proportions, composition and scale.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="number">03 — MODELLING</div>
+                <h3>Modelling</h3>
+                <p>
+                    Refine geometry by adding details and adjusting surfaces.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="number">04 — TEXTURING</div>
+                <h3>UV & Texturing</h3>
+                <p>
+                    Prepare surfaces for colours, patterns, materials and details.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="number">05 — LIGHTING</div>
+                <h3>Lighting & Camera</h3>
+                <p>
+                    Position lights and cameras to control realism, mood and composition.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="number">06 — RENDER</div>
+                <h3>Rendering</h3>
+                <p>
+                    Generate the final image, animation or visual output.
+                </p>
+            </div>
 
         </div>
 
+    </div>
 
-        <div class="process">
-
-
-            <div class="process-box">
-
-                <h3>
-                    01 — Concept
-                </h3>
-
-                <p>
-                    Begin with an idea, sketch, reference image or
-                    design requirement. Decide what the final object
-                    or scene should look like.
-                </p>
-
-            </div>
+</section>
 
 
-            <div class="process-box">
+<!-- ================= MATERIALS ================= -->
 
-                <h3>
-                    02 — Blockout
-                </h3>
+<section>
 
-                <p>
-                    Use basic shapes to establish the overall
-                    proportions, composition and scale.
-                </p>
-
-            </div>
-
-
-            <div class="process-box">
-
-                <h3>
-                    03 — Modelling
-                </h3>
-
-                <p>
-                    Refine the geometry by adding details and
-                    adjusting vertices, edges, faces and surfaces.
-                </p>
-
-            </div>
-
-
-            <div class="process-box">
-
-                <h3>
-                    04 — UV & Texturing
-                </h3>
-
-                <p>
-                    Prepare the model's surface for textures and
-                    materials. Textures can add color, patterns,
-                    roughness and other visual details.
-                </p>
-
-            </div>
-
-
-            <div class="process-box">
-
-                <h3>
-                    05 — Lighting & Camera
-                </h3>
-
-                <p>
-                    Position lights and cameras to control how the
-                    model and environment will appear in the final
-                    presentation.
-                </p>
-
-            </div>
-
-
-            <div class="process-box">
-
-                <h3>
-                    06 — Rendering
-                </h3>
-
-                <p>
-                    Rendering generates the final image or animation
-                    from the 3D scene using the chosen materials,
-                    lighting, camera and rendering settings.
-                </p>
-
-            </div>
-
-
-        </div>
-
-    </section>
-
-
-    <!-- MATERIALS -->
-
-    <section>
+    <div class="container">
 
         <div class="section-title">
-
             <h2>Materials, Textures & Lighting</h2>
+            <p>Turning geometry into believable surfaces.</p>
+        </div>
 
-            <p>
-                Turning geometry into believable surfaces
-            </p>
+        <div class="card-grid">
+
+            <div class="card">
+                <h3>Materials</h3>
+                <p>
+                    Materials describe how surfaces interact with light.
+                    They can represent metal, glass, plastic, wood, stone and more.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Textures</h3>
+                <p>
+                    Textures add colours, patterns, surface details and
+                    signs of wear to digital models.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Lighting</h3>
+                <p>
+                    Lighting creates highlights, shadows, depth and mood
+                    within a 3D scene.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Rendering</h3>
+                <p>
+                    Rendering converts the 3D scene into a final visual
+                    output such as an image or animation.
+                </p>
+            </div>
 
         </div>
 
+    </div>
 
-        <div class="content-box">
-
-            <h3>
-                Materials
-            </h3>
-
-            <p>
-                Materials describe how a surface interacts with
-                light. A material can help a model appear to be
-                made from metal, plastic, glass, wood, stone,
-                fabric or other substances.
-            </p>
-
-            <h3>
-                Textures
-            </h3>
-
-            <p>
-                Textures provide visual information across the
-                surface of a model. They can be used to create
-                colors, patterns, surface details and signs of wear.
-            </p>
-
-            <h3>
-                Lighting
-            </h3>
-
-            <p>
-                Lighting affects the mood, visibility and realism
-                of a 3D scene. Designers can use different light
-                sources and positions to create highlights,
-                shadows and depth.
-            </p>
-
-            <h3>
-                Rendering
-            </h3>
-
-            <p>
-                Rendering is the process of generating the final
-                visual output from a 3D scene. The result can be
-                a still image, animation or other visual output.
-            </p>
-
-        </div>
-
-    </section>
+</section>
 
 
-    <!-- ANIMATION -->
+<!-- ================= USES ================= -->
 
-    <section>
+<section id="uses">
+
+    <div class="container">
 
         <div class="section-title">
-
-            <h2>Animation & Rigging</h2>
-
-            <p>
-                Giving 3D objects and characters movement
-            </p>
-
-        </div>
-
-
-        <div class="content-box">
-
-            <p>
-                3D animation involves changing an object's properties
-                over time. Animators can control position, rotation,
-                scale, shape and other properties to create movement.
-            </p>
-
-            <p>
-                Characters often require rigging. A rig provides a
-                controllable skeletal structure that allows an
-                animator to pose and move the character.
-            </p>
-
-            <p>
-                Animation is widely used in films, games, advertisements,
-                educational content, simulations and motion graphics.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- APPLICATIONS -->
-
-    <section id="applications">
-
-        <div class="section-title">
-
             <h2>Where Is 3D Design Used?</h2>
+            <p>Industries using 3D technology around the world.</p>
+        </div>
 
-            <p>
-                3D technology is used across many industries
-            </p>
+        <div class="card-grid">
+
+            <div class="card uses-card">
+                <h3>Architecture</h3>
+                <p>
+                    Buildings, interiors and environments can be visualized
+                    before construction begins.
+                </p>
+            </div>
+
+            <div class="card uses-card">
+                <h3>Engineering</h3>
+                <p>
+                    Engineers create and evaluate components, products
+                    and mechanical systems.
+                </p>
+            </div>
+
+            <div class="card uses-card">
+                <h3>Film & Television</h3>
+                <p>
+                    3D models and visual effects can create characters,
+                    creatures, environments and digital effects.
+                </p>
+            </div>
+
+            <div class="card uses-card">
+                <h3>Video Games</h3>
+                <p>
+                    Games use 3D assets for characters, vehicles,
+                    buildings, environments and objects.
+                </p>
+            </div>
+
+            <div class="card uses-card">
+                <h3>Product Design</h3>
+                <p>
+                    Designers can visualize and refine products before
+                    physical production.
+                </p>
+            </div>
+
+            <div class="card uses-card">
+                <h3>Education & Science</h3>
+                <p>
+                    3D models can make complex scientific concepts,
+                    machines and structures easier to understand.
+                </p>
+            </div>
 
         </div>
 
+    </div>
 
-        <div class="applications">
-
-
-            <div class="application">
-
-                <h3>
-                    Architecture
-                </h3>
-
-                <p>
-                    Architects can create digital buildings,
-                    interiors and environments to visualize
-                    designs before construction.
-                </p>
-
-            </div>
+</section>
 
 
-            <div class="application">
+<!-- ================= RESOURCES ================= -->
 
-                <h3>
-                    Engineering & Manufacturing
-                </h3>
+<section id="resources">
 
-                <p>
-                    Engineers use 3D models to design components,
-                    products and mechanical systems and to evaluate
-                    designs before manufacturing.
-                </p>
-
-            </div>
-
-
-            <div class="application">
-
-                <h3>
-                    Film & Television
-                </h3>
-
-                <p>
-                    3D modelling and visual effects can create
-                    characters, environments, creatures and
-                    digital effects.
-                </p>
-
-            </div>
-
-
-            <div class="application">
-
-                <h3>
-                    Video Games
-                </h3>
-
-                <p>
-                    Game developers create characters, buildings,
-                    vehicles, weapons, environments and other
-                    digital assets.
-                </p>
-
-            </div>
-
-
-            <div class="application">
-
-                <h3>
-                    Product Design
-                </h3>
-
-                <p>
-                    Designers can visualize products and test
-                    different shapes, materials and appearances
-                    before production.
-                </p>
-
-            </div>
-
-
-            <div class="application">
-
-                <h3>
-                    Education & Science
-                </h3>
-
-                <p>
-                    3D models can help explain scientific concepts,
-                    anatomy, machines, structures and complex
-                    systems.
-                </p>
-
-            </div>
-
-
-        </div>
-
-    </section>
-
-
-    <!-- RETOPOLOGY -->
-
-    <section>
+    <div class="container">
 
         <div class="section-title">
-
-            <h2>Retopology & Optimization</h2>
-
-            <p>
-                Preparing detailed models for efficient use
-            </p>
-
-        </div>
-
-
-        <div class="content-box">
-
-            <p>
-                Highly detailed models can contain very large numbers
-                of polygons. Retopology is the process of restructuring
-                or optimizing a mesh to create a more efficient model.
-            </p>
-
-            <p>
-                Good retopology can help reduce unnecessary geometry,
-                improve deformation during animation and make models
-                easier to use in real-time applications.
-            </p>
-
-            <p>
-                It can also help prepare models for UV mapping,
-                texturing, animation and other stages of a production
-                pipeline.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- 3D SOFTWARE -->
-
-    <section id="resources">
-
-        <div class="section-title">
-
             <h2>Explore 3D Resources</h2>
-
             <p>
-                Websites where you can learn more about 3D design
+                Useful websites for learning, modelling, assets and inspiration.
             </p>
-
         </div>
 
+        <div class="card-grid">
 
-        <div class="resources">
+            <div class="card resource-card">
 
+                <div>
+                    <h3>Blender</h3>
 
-            <div class="resource">
+                    <p>
+                        A free and open-source 3D creation suite for
+                        modelling, animation, rendering, simulation and more.
+                    </p>
+                </div>
 
-                <h3>
-                    Blender
-                </h3>
-
-                <p>
-                    A free and open-source 3D creation suite supporting
-                    modelling, animation, rigging, simulation, rendering,
-                    compositing and video editing.
-                </p>
-
-                <a href="https://www.blender.org/"
-                   target="_blank"
-                   rel="noopener noreferrer">
-
+                <a
+                    href="https://www.blender.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="resource-link">
                     Visit Blender →
-
                 </a>
 
             </div>
 
 
-            <div class="resource">
+            <div class="card resource-card">
 
-                <h3>
-                    Blender Manual
-                </h3>
+                <div>
+                    <h3>Blender Manual</h3>
 
-                <p>
-                    Read the official Blender documentation and learn
-                    about modelling, sculpting, animation, rendering,
-                    materials and other tools.
-                </p>
+                    <p>
+                        Official documentation covering Blender's tools,
+                        modelling, materials, animation and rendering.
+                    </p>
+                </div>
 
-                <a href="https://docs.blender.org/manual/en/latest/"
-                   target="_blank"
-                   rel="noopener noreferrer">
-
-                    Read Blender Manual →
-
+                <a
+                    href="https://docs.blender.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="resource-link">
+                    Read the Manual →
                 </a>
 
             </div>
 
 
-            <div class="resource">
+            <div class="card resource-card">
 
-                <h3>
-                    Autodesk 3D Modelling
-                </h3>
+                <div>
+                    <h3>Autodesk</h3>
 
-                <p>
-                    Learn about 3D modelling concepts, workflows,
-                    applications and professional design tools.
-                </p>
+                    <p>
+                        Professional design and engineering software
+                        used across architecture, manufacturing and media.
+                    </p>
+                </div>
 
-                <a href="https://www.autodesk.com/solutions/3d-modeling-software"
-                   target="_blank"
-                   rel="noopener noreferrer">
-
-                    Learn at Autodesk →
-
+                <a
+                    href="https://www.autodesk.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="resource-link">
+                    Visit Autodesk →
                 </a>
 
             </div>
 
 
-            <div class="resource">
+            <div class="card resource-card">
 
-                <h3>
-                    Autodesk Learning
-                </h3>
+                <div>
+                    <h3>Sketchfab</h3>
 
-                <p>
-                    Explore beginner and professional learning
-                    resources covering 3D modelling and design.
-                </p>
+                    <p>
+                        Explore interactive 3D models and discover work
+                        created by artists and designers.
+                    </p>
+                </div>
 
-                <a href="https://www.autodesk.com/learn/ondemand/collection/3d-modeling"
-                   target="_blank"
-                   rel="noopener noreferrer">
-
-                    Explore Autodesk Learning →
-
-                </a>
-
-            </div>
-
-
-            <div class="resource">
-
-                <h3>
-                    Sketchfab
-                </h3>
-
-                <p>
-                    Explore interactive 3D models and discover
-                    work created by artists and designers.
-                </p>
-
-                <a href="https://sketchfab.com/"
-                   target="_blank"
-                   rel="noopener noreferrer">
-
+                <a
+                    href="https://sketchfab.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="resource-link">
                     Visit Sketchfab →
-
                 </a>
 
             </div>
 
 
-            <div class="resource">
+            <div class="card resource-card">
 
-                <h3>
-                    Poly Haven
-                </h3>
+                <div>
+                    <h3>Poly Haven</h3>
+
+                    <p>
+                        Find free 3D assets, textures and HDRIs for
+                        creative projects.
+                    </p>
+                </div>
+
+                <a
+                    href="https://polyhaven.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="resource-link">
+                    Visit Poly Haven →
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="affiliate-note">
+
+            <strong>Disclosure:</strong>
+            Some recommended resources on this website may eventually
+            use affiliate or referral links. If a qualifying program is
+            available and I participate in it, I may receive a commission
+            at no additional cost to you.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= MONETIZATION ================= -->
+
+<section class="money-section">
+
+    <div class="container">
+
+        <div class="section-title">
+            <h2>Recommended Tools & Opportunities</h2>
+
+            <p>
+                Tools and resources that can help creators learn and
+                improve their 3D design skills.
+            </p>
+
+        </div>
+
+
+        <div class="card-grid">
+
+            <div class="money-card">
+
+                <h3>🎨 Learn 3D Design</h3>
 
                 <p>
-                    Explore free 3D assets, textures and HDRIs
-                    for creative projects.
+                    Start with free software and educational resources.
+                    Practice modelling, texturing, lighting and rendering.
                 </p>
 
-                <a href="https://polyhaven.com/"
-                   target="_blank"
-                   rel="noopener noreferrer">
-
-                    Visit Poly Haven →
-
-                </a>
+                <ul>
+                    <li>Begin with Blender</li>
+                    <li>Practice simple objects</li>
+                    <li>Build a portfolio</li>
+                </ul>
 
             </div>
 
 
+            <div class="money-card">
+
+                <h3>💼 Build Your Portfolio</h3>
+
+                <p>
+                    Create impressive projects that you can show to
+                    potential clients.
+                </p>
+
+                <ul>
+                    <li>Website designs</li>
+                    <li>3D models</li>
+                    <li>Game assets</li>
+                    <li>Product visualizations</li>
+                </ul>
+
+            </div>
+
+
+            <div class="money-card">
+
+                <h3>🚀 Work With Me</h3>
+
+                <p>
+                    Need help with a website or digital project?
+                    Contact me and let's discuss your idea.
+                </p>
+
+                <br>
+
+                <a
+                    href="https://wa.me/2349029377523?text=Hello%20Lincoln%2C%20I%20found%20your%203D%20Design%20website%20and%20I%27m%20interested%20in%20your%20services."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-primary">
+                    Contact Me
+                </a>
+
+            </div>
+
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
-    <!-- AUTHOR -->
+<!-- ================= ADVERTISEMENT ================= -->
 
-    <section>
+<div class="advertisement">
 
-        <div class="author-box">
+    ADVERTISEMENT
 
-            <h2>
-                About This Website
-            </h2>
-
-            <p>
-                This educational webpage was created as a project
-                to explore and present the fundamentals of 3D design,
-                modelling and digital graphics.
-            </p>
-
-            <p class="author-name">
-                Written & Edited by Lincoln Uchendu
-            </p>
-
-            <p>
-                3D Design Web Project • 2026
-            </p>
-
-        </div>
-
-    </section>
+</div>
 
 
-    <!-- WHATSAPP -->
+<!-- ================= HIRE ME ================= -->
 
-    <a href="https://wa.me/2349029377523?text=Hello%20I%20saw%20your%203D%20Design%20website%20and%20I%27m%20interested%20in%20your%20services."
-       class="whatsapp-button"
-       target="_blank"
-       rel="noopener noreferrer">
+<section id="hire" class="hire">
 
-        💬 Contact Me
+    <div class="container">
 
-    </a>
-
-
-    <!-- FOOTER -->
-
-    <footer>
+        <h2>Need a Website or Digital Design?</h2>
 
         <p>
-            © 2026 3D Design. All Rights Reserved.
+            I create simple websites and digital projects for people,
+            students, businesses and personal brands.
         </p>
 
-        <p>
-            Created and edited by <strong>Lincoln Uchendu</strong>.
-        </p>
+        <a
+            href="https://wa.me/2349029377523?text=Hello%20Lincoln%2C%20I%20would%20like%20to%20discuss%20a%20website%20or%20digital%20design%20project."
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hire-btn">
 
-        <p>
-            Learn • Create • Explore
-        </p>
+            💬 Hire Me on WhatsApp
 
-    </footer>
+        </a>
 
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <strong>3D DESIGN</strong>
+
+    <div class="footer-links">
+
+        <a href="#about">About</a>
+        <a href="#geometry">Geometry</a>
+        <a href="#workflow">Process</a>
+        <a href="#resources">Resources</a>
+        <a href="#hire">Contact</a>
+
+    </div>
+
+    <p>
+        Written & Edited by Lincoln Uchendu
+    </p>
+
+    <p>
+        3D Design Web Project • 2026
+    </p>
+
+    <p>
+        Learn • Create • Explore
+    </p>
+
+    <br>
+
+    <p>
+        © 2026 3D Design. All Rights Reserved.
+    </p>
+
+</footer>
 
 </body>
-
 </html>
